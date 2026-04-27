@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: smartcivic
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --bind 0.0.0.0:$PORT --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
